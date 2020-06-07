@@ -1,0 +1,22 @@
+ {
+    "parser": "babel-eslint",
+    "env":{
+        "node": true,
+        "es6": true,
+        "commonjs": true
+    },
+    "rules": {
+        "indent": ["error", 2],
+        "semi": ["error", "always"],
+        // "quotes": [
+        //     "error",
+        //     "single",
+        //     {
+        //         "allowTempleteLiterals": true
+        //     }
+        // ],
+        "quotes" : [2, "single"],
+        "no-unreachable": 2, // 不允许在return、throw、continue、break等中断语句之后出现代码，因为这些代码永远不会被执行到。
+        "no-redeclare": 2 // 不允许重复定义变量
+    }
+}
