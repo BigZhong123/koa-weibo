@@ -14,6 +14,7 @@ const index = require('./routes/index');
 const userViewRouter = require('./routes/view/user');
 const userApiRouter = require('./routes/api/user');
 const errorViewRouter = require('./routes/view/error');
+const { SESSION_SECRET_KEY } = require('./conf/secret');
 
 // error handler
 let onerrorConf = {};
@@ -51,7 +52,7 @@ app.use(views(__dirname + '/views', {
 // })
 
 // session 的配置
-app.keys=['Zz123456!_$'];
+app.keys=[SESSION_SECRET_KEY];
 app.use(session({
   key: 'weibo.sid', // cookie name 默认是 koa.sid
   prefix: 'weibo:sess:', // redis 的前缀 默认是 koa:sess:

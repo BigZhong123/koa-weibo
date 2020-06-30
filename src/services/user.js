@@ -5,6 +5,7 @@
 
 const { User } = require('../db/model');
 const { formatUser } = require('./_formate');
+const doCrypro = require('../utils/crypto');
 
 async function getUserInfo (userName, password) {
   const whereOpt = {
@@ -29,7 +30,7 @@ async function getUserInfo (userName, password) {
 async function createUser({ userName, password, gender = 3, nickName }) {
   const result = await User.create({
     userName,
-    password,
+    password: doCrypro(password),
     nickName: nickName ? nickName : userName,
     gender
   });
