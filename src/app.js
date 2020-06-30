@@ -19,15 +19,15 @@ const { SESSION_SECRET_KEY } = require('./conf/secret');
 // error handler
 let onerrorConf = {};
 if (isProd) {
-  onerrorConf = {
-    redirect: '/error'
-  };
+    onerrorConf = {
+        redirect: '/error'
+    };
 }
 onerror(app, onerrorConf);
 
 // middlewares 解析请求的 body
 app.use(bodyparser({
-  enableTypes:['json', 'form', 'text']
+    enableTypes:['json', 'form', 'text']
 }));
 app.use(json());
 
@@ -40,7 +40,7 @@ app.use(require('koa-static')(__dirname + '/public'));
 
 // 注册 ejs
 app.use(views(__dirname + '/views', {
-  extension: 'ejs'
+    extension: 'ejs'
 }));
 
 // logger 手写的日志 logger
@@ -54,17 +54,17 @@ app.use(views(__dirname + '/views', {
 // session 的配置
 app.keys=[SESSION_SECRET_KEY];
 app.use(session({
-  key: 'weibo.sid', // cookie name 默认是 koa.sid
-  prefix: 'weibo:sess:', // redis 的前缀 默认是 koa:sess:
-  cookie: {
-    path: '/', // 能访问到 cookie 的域
-    httpOnly: true, // 只用于 http 传输
-    maxAge: 24 * 60 * 60 * 1000 // cookie 的过期时间
-  },
-  // ttl: 24 * 60 * 60 * 1000 // redis 的过期时间，不填默认和 cookie 的过期时间一样
-  store: redisStroe({
-    all: `${REDIS_CONF.host}:${REDIS_CONF.port}`
-  })
+    key: 'weibo.sid', // cookie name 默认是 koa.sid
+    prefix: 'weibo:sess:', // redis 的前缀 默认是 koa:sess:
+    cookie: {
+        path: '/', // 能访问到 cookie 的域
+        httpOnly: true, // 只用于 http 传输
+        maxAge: 24 * 60 * 60 * 1000 // cookie 的过期时间
+    },
+    // ttl: 24 * 60 * 60 * 1000 // redis 的过期时间，不填默认和 cookie 的过期时间一样
+    store: redisStroe({
+        all: `${REDIS_CONF.host}:${REDIS_CONF.port}`
+    })
 }));
 
 // routes
@@ -75,7 +75,7 @@ app.use(errorViewRouter.routes(), errorViewRouter.allowedMethods()); // 404 和 
 
 // error-handling
 app.on('error', (err, ctx) => {
-  console.error('server error', err, ctx);
+    console.error('server error', err, ctx);
 });
 
 module.exports = app;
