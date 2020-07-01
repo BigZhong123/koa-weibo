@@ -7,7 +7,8 @@ const { getUserInfo, createUser } = require('../services/user');
 const { SuccessModel, ErrorModel, registerFailInfo } = require('../model/ResModel');
 const {
     registerUserNameNotExistInfo,
-    registerUserNameExistInfo
+    registerUserNameExistInfo,
+    loginFailInfo
 } = require('../model/errorInfo');
 const doCrypro = require('../utils/crypto');
 
