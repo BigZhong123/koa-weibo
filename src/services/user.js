@@ -8,36 +8,46 @@ const { formatUser } = require('./_formate');
 const doCrypro = require('../utils/crypto');
 
 async function getUserInfo (userName, password) {
-  const whereOpt = {
-    userName
-  };
-  if (password) {
-    Object.assign(whereOpt, { password });
-  }
-  const result = await User.findOne({
-    attributes: ['userName', 'nickName', 'city', 'picture', 'gender'],
-    where: whereOpt
-  });
-  if (result === null) {
-    return result;
-  }
+    const whereOpt = {
+        userName
+    };
+    if (password) {
+        Object.assign(whereOpt, { password });
+    }
+    const result = await User.findOne({
+        attributes: ['userName', 'nickName', 'city', 'picture', 'gender'],
+        where: whereOpt
+    });
+    if (result === null) {
+        return result;
+    }
 
-  // 数据的格式化
-  const resultRes = formatUser(result.dataValues);
-  return resultRes;
+    // 数据的格式化
+    const resultRes = formatUser(result.dataValues);
+    return resultRes;
 }
 
 async function createUser({ userName, password, gender = 3, nickName }) {
-  const result = await User.create({
-    userName,
-    password: doCrypro(password),
-    nickName: nickName ? nickName : userName,
-    gender
-  });
-  return result.dataValues;
+    const result = await User.create({
+        userName,
+        password: doCrypro(password),
+        nickName: nickName ? nickName : userName,
+        gender
+    });
+    return result.dataValues;
+}
+
+async function deleteUser(userName) {
+    const result = await User.destroy({
+        where: {
+            userName
+        }
+    });
+    return result > 0;
 }
 
 module.exports = {
-  getUserInfo,
-  createUser
+    getUserInfo,
+    createUser,
+    deleteUser
 };

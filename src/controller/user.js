@@ -3,12 +3,14 @@
  * @author zhong
  */
 
-const { getUserInfo, createUser } = require('../services/user');
-const { SuccessModel, ErrorModel, registerFailInfo } = require('../model/ResModel');
+const { getUserInfo, createUser, deleteUser } = require('../services/user');
+const { SuccessModel, ErrorModel } = require('../model/ResModel');
 const {
     registerUserNameNotExistInfo,
     registerUserNameExistInfo,
-    loginFailInfo
+    loginFailInfo,
+    registerFailInfo,
+    deleteUserFailInfo,
 } = require('../model/errorInfo');
 const doCrypro = require('../utils/crypto');
 
@@ -49,8 +51,20 @@ async function login(ctx, userName, password) {
     return new SuccessModel();
 }
 
+async function deleteCurUser(userName) {
+    // 调用service
+    const result = await deleteUser(userName);
+    if (result) {
+        // 成功
+        return new SuccessModel();
+    }
+    // 失败
+    return new ErrorModel(deleteUserFailInfo);
+}
+
 module.exports = {
     isExist,
     register,
-    login
+    login,
+    deleteCurUser
 };
