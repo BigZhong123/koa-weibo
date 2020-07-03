@@ -1,5 +1,6 @@
 const Koa = require('koa');
 const app = new Koa();
+const path = require('path');
 const views = require('koa-views');
 const json = require('koa-json');
 const onerror = require('koa-onerror');
@@ -13,6 +14,7 @@ const { isProd } = require('./conf/db');
 const index = require('./routes/index');
 const userViewRouter = require('./routes/view/user');
 const userApiRouter = require('./routes/api/user');
+const utilsApiRouter = require('./routes/api/utils');
 const errorViewRouter = require('./routes/view/error');
 const { SESSION_SECRET_KEY } = require('./conf/secret');
 
@@ -36,6 +38,7 @@ app.use(logger());
 
 // 将 public 当做静态资源的目录
 app.use(require('koa-static')(__dirname + '/public'));
+app.use(require('koa-static')(path.join(__dirname, '..', '/uploadFiles')));
 
 
 // 注册 ejs
@@ -71,6 +74,7 @@ app.use(session({
 app.use(index.routes(), index.allowedMethods());
 app.use(userViewRouter.routes(), userViewRouter.allowedMethods());
 app.use(userApiRouter.routes(), userApiRouter.allowedMethods());
+app.use(utilsApiRouter.routes(), utilsApiRouter.allowedMethods());
 app.use(errorViewRouter.routes(), errorViewRouter.allowedMethods()); // 404 和 error 应该注册在最后面
 
 // error-handling
