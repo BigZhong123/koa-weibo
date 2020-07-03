@@ -62,7 +62,7 @@ router.patch('/changeInfo', loginCheck, genValidator(userValidate), async (ctx, 
 router.patch('/changePassword', loginCheck, genValidator(userValidate), async (ctx, next) => {
     const { password, newPassword } = ctx.request.body;
     const { userName } = ctx.session.userInfo;
-    ctx.body = changePassword(userName, password, newPassword);
+    ctx.body = await changePassword(userName, password, newPassword);
 });
 
 // 退出登录

@@ -52,15 +52,47 @@ test('测试登录，应该成功', async () => {
         password
     })
     expect(res.body.errno).toBe(0);
-    console.log(res.headers)
     COOKIE = res.headers['set-cookie'].join(';')
 })
+
+// 修改基本信息
+test('修改基本信息应该成功', async () => {
+    const res = await server
+        .patch('/api/user/changeInfo')
+        .send({
+            nickName: '测试昵称',
+            city: '测试城市',
+            picture: '/test.png'
+        })
+        .set('cookie', COOKIE);
+    expect(res.body.errno).toBe(0);
+});
+
+// 修改密码
+test('修改密码应该成功', async () => {
+    const res = await server
+        .patch('/api/user/changePassword')
+        .send({
+            password,
+            newPassword: `p_${Date.now()}`
+        })
+        .set('cookie', COOKIE);
+    expect(res.body.errno).toBe(0);
+});
 
 // 删除用户
 test('删除用户，应该成功', async () => {
     const res = await server.post('/api/user/delete').set('cookie', COOKIE);
     expect(res.body.errno).toBe(0);
 })
+
+// 退出
+test('退出登录应该成功', async () => {
+    const res = await server
+        .post('/api/user/logout')
+        .set('cookie', COOKIE);
+    expect(res.body.errno).toBe(0);
+});
 
 // 再次查询用户，应该不存在
 test('再次查询用户名，应该失败', async () => {

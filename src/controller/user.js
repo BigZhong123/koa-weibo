@@ -107,7 +107,6 @@ async function changePassword (userName, password, newPassword) {
 
 async function logout(ctx) {
     delete ctx.session.userInfo;
-    console.log(666, ctx.session.userInfo);
     return new SuccessModel();
 }
 
