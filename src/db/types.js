@@ -6,9 +6,9 @@
 const Sequelize = require('sequelize');
 
 module.exports = {
-  STRING: Sequelize.STRING,
-  INTEGER: Sequelize.INTEGER,
-  DECIMAL: Sequelize.DECIMAL,
-  TEXT: Sequelize.TEXT,
-  BOOLEAN: Sequelize.BOOLEAN
+    STRING: Sequelize.STRING,
+    INTEGER: Sequelize.INTEGER,
+    DECIMAL: Sequelize.DECIMAL,
+    TEXT: Sequelize.TEXT,
+    BOOLEAN: Sequelize.BOOLEAN
 };

@@ -3,7 +3,6 @@
  * @author zhong
  */
 
-const Sequelize = require('sequelize');
 const seq = require('../seq');
 const { STRING, DECIMAL } = require('../types');
 
