@@ -3,7 +3,7 @@
  * @author zhong
  */
 
-const { getUserInfo, createUser, deleteUser } = require('../services/user');
+const { getUserInfo, createUser, deleteUser, updateUser } = require('../services/user');
 const { SuccessModel, ErrorModel } = require('../model/ResModel');
 const {
     registerUserNameNotExistInfo,
@@ -11,6 +11,8 @@ const {
     loginFailInfo,
     registerFailInfo,
     deleteUserFailInfo,
+    changeInfoFailInfo,
+    changePasswordFailInfo,
 } = require('../model/errorInfo');
 const doCrypro = require('../utils/crypto');
 
@@ -62,9 +64,59 @@ async function deleteCurUser(userName) {
     return new ErrorModel(deleteUserFailInfo);
 }
 
+// ctx 用于修改 session
+async function changeInfo(ctx, { nickName, picture, city} ){
+    const { userName } = ctx.session.userInfo;
+    // services
+    const result = await updateUser(
+        {
+            newNickName: nickName,
+            newPicture: picture,
+            newCity: city
+        }, {
+            userName
+        });
+    if (result) {
+        Object.assign(ctx.session.userInfo, {
+            nickName,
+            picture,
+            city
+        });
+        return new SuccessModel();
+    }
+    return new ErrorModel(changeInfoFailInfo);
+}
+
+async function changePassword (userName, password, newPassword) {
+    const result = await updateUser(
+        {
+            newPassword: doCrypro(newPassword),
+        },
+        {
+            userName,
+            password: doCrypro(password)
+        }
+    );
+    if (result) {
+        // 成功
+        return new SuccessModel();
+    }
+    // 失败
+    return new ErrorModel(changePasswordFailInfo);
+}
+
+async function logout(ctx) {
+    delete ctx.session.userInfo;
+    console.log(666, ctx.session.userInfo);
+    return new SuccessModel();
+}
+
 module.exports = {
     isExist,
     register,
     login,
-    deleteCurUser
+    deleteCurUser,
+    changeInfo,
+    changePassword,
+    logout
 };

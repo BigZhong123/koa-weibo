@@ -46,8 +46,39 @@ async function deleteUser(userName) {
     return result > 0;
 }
 
+async function updateUser(
+    { newNickName, newPicture, newCity, newPassword },
+    { userName, password }
+) {
+    // 拼接修改的数据
+    const updateData = {};
+    if (newNickName) {
+        updateData.nickName = newNickName;
+    }
+    if (newPicture) {
+        updateData.picture = newPicture;
+    }
+    if (newCity) {
+        updateData.city = newCity;
+    }
+    if (newPassword) {
+        updateData.password = newPassword;
+    }
+    // 拼接查询条件
+    const whereOpt = { userName };
+    if (password) {
+        whereOpt.password = password;
+    }
+    // 执行修改
+    const result = await User.update(updateData, {
+        where: whereOpt
+    });
+    return result[0] > 0; // result 为删除的行数
+}
+
 module.exports = {
     getUserInfo,
     createUser,
-    deleteUser
+    deleteUser,
+    updateUser
 };

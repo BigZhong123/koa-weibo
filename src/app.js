@@ -64,7 +64,7 @@ app.use(session({
         httpOnly: true, // 只用于 http 传输
         maxAge: 24 * 60 * 60 * 1000 // cookie 的过期时间
     },
-    // ttl: 24 * 60 * 60 * 1000 // redis 的过期时间，不填默认和 cookie 的过期时间一样
+    // ttl: 24 * 60 * 60 * 1000, // session 的过期时间，不填默认和 cookie 的过期时间一样
     store: redisStroe({
         all: `${REDIS_CONF.host}:${REDIS_CONF.port}`
     })
