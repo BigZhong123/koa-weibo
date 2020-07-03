@@ -52,6 +52,7 @@ test('测试登录，应该成功', async () => {
         password
     })
     expect(res.body.errno).toBe(0);
+    console.log(res.headers)
     COOKIE = res.headers['set-cookie'].join(';')
 })
 
