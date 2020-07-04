@@ -14,7 +14,7 @@ async function create({ userId, content, image }) {
             content,
             image
         });
-        return new SuccessModel();
+        return new SuccessModel(blog);
     } catch (err) {
         console.error(err.stack, err.message);
         return new ErrorModel(createBlogFailInfo);
