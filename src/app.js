@@ -13,8 +13,10 @@ const { isProd } = require('./conf/db');
 
 const index = require('./routes/index');
 const userViewRouter = require('./routes/view/user');
+const blogViewRouter = require('./routes/view/blog');
 const userApiRouter = require('./routes/api/user');
 const utilsApiRouter = require('./routes/api/utils');
+const homeApiRouter = require('./routes/api/blog-home');
 const errorViewRouter = require('./routes/view/error');
 const { SESSION_SECRET_KEY } = require('./conf/secret');
 
@@ -75,6 +77,8 @@ app.use(index.routes(), index.allowedMethods());
 app.use(userViewRouter.routes(), userViewRouter.allowedMethods());
 app.use(userApiRouter.routes(), userApiRouter.allowedMethods());
 app.use(utilsApiRouter.routes(), utilsApiRouter.allowedMethods());
+app.use(blogViewRouter.routes(), blogViewRouter.allowedMethods());
+app.use(homeApiRouter.routes(), homeApiRouter.allowedMethods());
 app.use(errorViewRouter.routes(), errorViewRouter.allowedMethods()); // 404 和 error 应该注册在最后面
 
 // error-handling
