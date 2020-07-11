@@ -4,5 +4,6 @@
  */
 
 module.exports = {
-  defaultPicUrl: 'https://dwz.cn/rnTnftZs'
+    defaultPicUrl: 'https://dwz.cn/rnTnftZs',
+    PAGE_SIZE: 5
 };

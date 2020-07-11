@@ -38,14 +38,6 @@ router.get('/json', async (ctx, next) => {
     };
 });
 
-router.get('/profile/:userName', async (ctx, next) => {
-    const { userName } = ctx.params;
-    ctx.body = {
-        slogan: 'This is profile',
-        userName,
-    };
-});
-
 router.get('/loadMore/:userName/:pageIndex', async (ctx, next) => {
     const { userName, pageIndex } = ctx.params;
     ctx.body = {
